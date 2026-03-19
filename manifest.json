@@ -1,0 +1,21 @@
+{
+  "name": "Flora — 植物学者のガーデン",
+  "short_name": "Flora",
+  "description": "GPS連動の植物採集・育成ゲーム",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0e1208",
+  "theme_color": "#7ab648",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

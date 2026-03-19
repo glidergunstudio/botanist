@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flora — 植物学者のガーデン</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Serif+JP:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <span class="logo">Flora<span>.</span></span>
+      <div class="stat-pill">🌿 スキル Lv.<strong id="skillLv">1</strong></div>
+      <div class="stat-pill">🌰 種袋 <strong id="seedCount">0</strong></div>
+      <div class="stat-pill">🪴 <strong id="planterCount">0</strong>/8</div>
+      <div class="stat-pill">💰 <strong id="gold">800</strong> G</div>
+      <nav class="tab-nav">
+        <button class="tab-btn active" data-tab="map">🗺 地図</button>
+        <button class="tab-btn" data-tab="planter">🪴 プランター</button>
+        <button class="tab-btn" data-tab="gene">🧬 交配室</button>
+        <button class="tab-btn" data-tab="market">🏪 市場</button>
+      </nav>
+    </header>
+
+    <aside class="sidebar-left">
+      <div class="section-title">種袋</div>
+      <div id="seedBag"></div>
+    </aside>
+
+    <main class="main" id="mainContent"></main>
+
+    <aside class="sidebar-right" id="rightPanel">
+      <div class="detail-panel">
+        <div class="empty-hint">種や植物を選択すると<br>詳細が表示されます</div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="modal-bg" id="modalBg">
+    <div class="modal" id="modalContent"></div>
+  </div>
+  <div id="notifArea"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/planter.js"></script>
+  <script src="js/gene.js"></script>
+  <script src="js/market.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
