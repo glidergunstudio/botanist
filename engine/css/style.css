@@ -1,0 +1,48 @@
+/* style.css — 植物描画エンジン スタイル */
+
+:root {
+  --bg:#0c1008;--bg2:#131a0d;--bg3:#1a2412;
+  --panel:#161e0f;--border:#263318;--border2:#344820;
+  --green:#86c655;--green2:#4a8c20;--green-dim:#2a5010;
+  --gold:#d4ac4c;--text:#cce8a0;--text2:#7a9c50;--text3:#4a6030;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:13px;}
+.app{display:grid;grid-template-columns:280px 1fr 260px;height:100vh;overflow:hidden;}
+.left{background:var(--panel);border-right:1px solid var(--border);overflow-y:auto;padding:14px;}
+.center{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);position:relative;overflow:hidden;}
+#tooltip{display:none;position:absolute;background:var(--bg2);border:1px solid var(--green);border-radius:8px;padding:8px 12px;pointer-events:none;z-index:100;max-width:220px;}
+#tip-name{font-size:12px;font-weight:700;color:var(--gold);margin-bottom:4px;}
+#tip-vars{font-size:10px;color:var(--text2);font-family:'JetBrains Mono',monospace;line-height:1.6;white-space:pre-wrap;}
+.right{background:var(--panel);border-left:1px solid var(--border);overflow-y:auto;padding:14px;}
+.bg-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border)30 1px,transparent 1px),linear-gradient(90deg,var(--border)30 1px,transparent 1px);background-size:40px 40px;pointer-events:none;}
+.sec{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin:12px 0 8px;}
+.sr{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+.sl{font-size:11px;color:var(--text2);width:76px;flex-shrink:0;}
+input[type=range]{flex:1;accent-color:var(--green);height:4px;}
+.sv{font-size:11px;color:var(--green);width:38px;text-align:right;font-family:'JetBrains Mono',monospace;}
+.btn-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+.btn{padding:5px 10px;border-radius:5px;border:1px solid;font-family:inherit;font-size:11px;cursor:pointer;transition:all .2s;font-weight:700;}
+.bg{background:#3a2a08;border-color:var(--gold);color:var(--gold);}
+.bg:hover{background:var(--gold);color:var(--bg);}
+.bd{background:transparent;border-color:var(--border2);color:var(--text3);}
+.bd:hover{border-color:var(--text3);color:var(--text2);}
+.bgn{background:var(--green-dim);border-color:var(--green);color:var(--green);}
+.bgn:hover{background:var(--green);color:var(--bg);}
+.plant-label{text-align:center;margin-top:10px;}
+.plant-label h2{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold);font-size:20px;}
+.plant-label p{font-size:11px;color:var(--text3);margin-top:3px;}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--bg3);transition:background .3s;}
+.sdot.done{background:var(--green2);}
+.sdot.active{background:var(--green);}
+.si{display:flex;gap:4px;justify-content:center;margin-top:8px;}
+.gbtn{margin-top:12px;padding:8px 28px;background:var(--green-dim);border:1px solid var(--green);border-radius:30px;color:var(--green);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
+.gbtn:hover{background:var(--green);color:var(--bg);}
+.ti{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);}
+.tk{font-size:11px;color:var(--text3);}
+.tv{font-size:11px;color:var(--text);font-family:'JetBrains Mono',monospace;}
+.sw{width:14px;height:14px;border-radius:2px;border:1px solid var(--border2);display:inline-block;vertical-align:middle;margin-right:3px;}
+/* SELECT */
+select{background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:3px 6px;font-family:inherit;font-size:11px;color:var(--text2);width:100%;margin-bottom:6px;}
+.sel-row{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+.sel-lbl{font-size:11px;color:var(--text2);width:76px;flex-shrink:0;}

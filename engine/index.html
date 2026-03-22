@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Botanist — 植物描画エンジン v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Noto+Sans+JP:wght@300;400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+
+<!-- LEFT: GENE SLIDERS -->
+<div class="left">
+  <div style="font-family:'Playfair Display',serif;font-size:16px;color:var(--green);margin-bottom:12px">🌿 描画エンジン v2</div>
+
+  <div class="btn-row">
+    <button class="btn bg" onclick="load('tulip')">🌷チューリップ</button>
+    <button class="btn bg" onclick="load('sunflower')">🌻ヒマワリ</button>
+    <button class="btn bg" onclick="load('rose')">🌹バラ</button>
+    <button class="btn bg" onclick="load('cactus')">🌵サボテン</button>
+    <button class="btn bg" onclick="load('tomato')">🍅トマト</button>
+    <button class="btn bg" onclick="load('carrot')">🥕ニンジン</button>
+    <button class="btn bg" onclick="load('wisteria')">💜フジ</button>
+    <button class="btn bg" onclick="load('dandelion')">🌼タンポポ</button>
+    <button class="btn bd" onclick="rnd()">🎲 ランダム</button>
+  </div>
+
+  <div class="sec">草姿</div>
+  <div class="sel-row"><div class="sel-lbl">草姿タイプ</div>
+    <select id="s_habit" onchange="update()">
+      <option value="erect">直立型</option>
+      <option value="woody">木本型</option>
+      <option value="creep">匍匐型</option>
+      <option value="rosette">ロゼット型</option>
+      <option value="cactus">多肉型</option>
+      <option value="vine">つる性</option>
+    </select>
+  </div>
+  <div class="sr"><div class="sl">草丈</div><input type="range" id="g_height" min="0.1" max="1" step="0.01" value="0.5" oninput="update()"><div class="sv" id="v_height">0.50</div></div>
+  <div class="sr"><div class="sl">茎の太さ</div><input type="range" id="g_stemW" min="0.05" max="1" step="0.01" value="0.3" oninput="update()"><div class="sv" id="v_stemW">0.30</div></div>
+  <div class="sr"><div class="sl">枝分かれ</div><input type="range" id="g_branch" min="0" max="1" step="0.01" value="0.3" oninput="update()"><div class="sv" id="v_branch">0.30</div></div>
+  <div class="sr"><div class="sl">幹の曲がり</div><input type="range" id="g_sway" min="0" max="1" step="0.01" value="0.1" oninput="update()"><div class="sv" id="v_sway">0.10</div></div>
+
+  <div class="sec">葉</div>
+  <div class="sel-row"><div class="sel-lbl">葉の形</div>
+    <select id="s_leafShape" onchange="update()">
+      <option value="oval">楕円形</option>
+      <option value="narrow">線形・披針形</option>
+      <option value="heart">心形</option>
+      <option value="round">円形</option>
+      <option value="compound">羽状複葉</option>
+      <option value="palmate">掌状複葉</option>
+      <option value="needle">針状（針葉樹）</option>
+    </select>
+  </div>
+  <div class="sr"><div class="sl">葉の大きさ</div><input type="range" id="g_leafSz" min="0.1" max="1" step="0.01" value="0.5" oninput="update()"><div class="sv" id="v_leafSz">0.50</div></div>
+  <div class="sr"><div class="sl">葉の数</div><input type="range" id="g_leafN" min="0.1" max="1" step="0.01" value="0.5" oninput="update()"><div class="sv" id="v_leafN">0.50</div></div>
+  <div class="sr"><div class="sl">葉の開き角</div><input type="range" id="g_leafA" min="0" max="1" step="0.01" value="0.5" oninput="update()"><div class="sv" id="v_leafA">0.50</div></div>
+  <div class="sr"><div class="sl">葉の赤紫</div><input type="range" id="g_leafR" min="0" max="1" step="0.01" value="0" oninput="update()"><div class="sv" id="v_leafR">0.00</div></div>
+
+  <div class="sec">花</div>
+  <div class="sel-row"><div class="sel-lbl">花序タイプ</div>
+    <select id="s_inflo" onchange="update()">
+      <option value="solitary">単頂花</option>
+      <option value="capitulum">頭状花序（ヒマワリ型）</option>
+      <option value="raceme">総状花序（フジ型）</option>
+      <option value="spike">穂状花序（ラベンダー型）</option>
+      <option value="umbel">散形花序（ニンジン型）</option>
+      <option value="corymb">散房花序（桜型）</option>
+    </select>
+  </div>
+  <div class="sel-row"><div class="sel-lbl">花弁の形</div>
+    <select id="s_petalShape" onchange="update()">
+      <option value="round">丸弁</option>
+      <option value="sword">剣弁</option>
+      <option value="frill">フリル弁</option>
+      <option value="tubular">筒状</option>
+    </select>
+  </div>
+  <div class="sr"><div class="sl">花弁数</div><input type="range" id="g_petalN" min="0.1" max="1" step="0.01" value="0.4" oninput="update()"><div class="sv" id="v_petalN">0.40</div></div>
+  <div class="sr"><div class="sl">花の大きさ</div><input type="range" id="g_flowerSz" min="0.1" max="1" step="0.01" value="0.5" oninput="update()"><div class="sv" id="v_flowerSz">0.50</div></div>
+  <div class="sr"><div class="sl">赤み</div><input type="range" id="g_fR" min="0" max="1" step="0.01" value="0.8" oninput="update()"><div class="sv" id="v_fR">0.80</div></div>
+  <div class="sr"><div class="sl">青み</div><input type="range" id="g_fB" min="0" max="1" step="0.01" value="0.1" oninput="update()"><div class="sv" id="v_fB">0.10</div></div>
+  <div class="sr"><div class="sl">黄み</div><input type="range" id="g_fY" min="0" max="1" step="0.01" value="0.1" oninput="update()"><div class="sv" id="v_fY">0.10</div></div>
+
+  <div class="sec">果実</div>
+  <div class="sel-row"><div class="sel-lbl">果実タイプ</div>
+    <select id="s_fruit" onchange="update()">
+      <option value="none">なし</option>
+      <option value="berry">液果（トマト型）</option>
+      <option value="drupe">核果（モモ型）</option>
+      <option value="pome">仁果（リンゴ型）</option>
+      <option value="legume">豆果（エンドウ型）</option>
+      <option value="cluster">房状（ブドウ型）</option>
+      <option value="aggregate">集合果（イチゴ型）</option>
+      <option value="capsule">蒴果（弾ける型）</option>
+      <option value="root_vis">根菜（地上に見える）</option>
+    </select>
+  </div>
+  <div class="sr"><div class="sl">果実の大きさ</div><input type="range" id="g_fruitSz" min="0.1" max="1" step="0.01" value="0.4" oninput="update()"><div class="sv" id="v_fruitSz">0.40</div></div>
+  <div class="sr"><div class="sl">果実の数</div><input type="range" id="g_fruitN" min="0.1" max="1" step="0.01" value="0.5" oninput="update()"><div class="sv" id="v_fruitN">0.50</div></div>
+  <div class="sr"><div class="sl">果実の赤み</div><input type="range" id="g_frR" min="0" max="1" step="0.01" value="0.8" oninput="update()"><div class="sv" id="v_frR">0.80</div></div>
+  <div class="sr"><div class="sl">果実の黄み</div><input type="range" id="g_frY" min="0" max="1" step="0.01" value="0.1" oninput="update()"><div class="sv" id="v_frY">0.10</div></div>
+
+  <div class="sec">成長段階</div>
+  <div class="sr"><div class="sl">段階 (0-7)</div><input type="range" id="g_stage" min="0" max="7" step="1" value="5" oninput="update()"><div class="sv" id="v_stage">5</div></div>
+</div>
+
+<!-- CENTER: SVG CANVAS -->
+<div class="center">
+  <div class="bg-grid"></div>
+  <div id="tooltip" style="position:absolute;top:0;left:0;">
+    <div id="tip-name"></div>
+    <div id="tip-vars"></div>
+  </div>
+  <svg id="svg" width="420" height="520" viewBox="0 0 420 520" style="position:relative;z-index:1">
+    <defs>
+      <filter id="highlight" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/>
+        <feFlood flood-color="#86c655" flood-opacity="0.8" result="color"/>
+        <feComposite in="color" in2="blur" operator="in" result="shadow"/>
+        <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+  </svg>
+  <div class="plant-label">
+    <h2 id="nameLabel">チューリップ</h2>
+    <p id="descLabel">遺伝子から描画された植物</p>
+  </div>
+  <div class="si" id="si"></div>
+  <button class="gbtn" onclick="animGrow()">▶ 成長アニメーション</button>
+</div>
+
+<!-- RIGHT: TRAITS -->
+<div class="right">
+  <div class="sec">形質データ</div>
+  <div id="traitPanel"></div>
+  <div class="sec" style="margin-top:16px">色情報</div>
+  <div id="colorPanel"></div>
+</div>
+
+</div><!-- .app -->
+
+<!-- JS: 依存順に読み込む -->
+<script src="js/engine/utils.js"></script>
+<script src="js/engine/color.js"></script>
+<script src="js/engine/tooltip.js"></script>
+<script src="js/engine/stem.js"></script>
+<script src="js/engine/leaf.js"></script>
+<script src="js/engine/flower.js"></script>
+<script src="js/engine/inflo.js"></script>
+<script src="js/engine/fruit.js"></script>
+<script src="js/engine/plant.js"></script>
+
+</body>
+</html>
